@@ -1,1 +1,2 @@
-# blood-connect-application
+# BloodConnect
+(Undergoing project)
