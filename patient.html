@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="bloodDonation.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('pat.PNG') center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: #1c1c1c;
+        }
+        h2{
+            font-size:36px;
+            color:#770f03
+        }
+        h2, h3 {
+            text-align: center;
+        }
+
+        section {
+            margin: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.204);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Patient Management</h2>
+
+    <!-- Registration Form -->
+    <section>
+        <h3>Add a New Patient</h3>
+        <form method="post" action="submitPatientData.php"> <!-- Assuming PHP is used -->
+            <label for="patientID">Patient ID:</label>
+            <input type="text" id="patientID" name="patientID" required>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="bloodGroup">Blood Group:</label>
+            <input type="text" id="bloodGroup" name="bloodGroup" required>
+
+            <label for="disease">Disease:</label>
+            <input type="text" id="disease" name="disease">
+
+            <label for="donationID">Donation ID:</label>
+            <input type="text" id="donationID" name="donationID">
+
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+
+    <!-- Search Bar -->
+    <section>
+        <h3>Search Patients</h3>
+        <form method="post" action="searchPatients.php"> <!-- Assuming PHP is used for search -->
+            <label for="search">Search by ID, Name, Blood Group, Disease, or Donation ID:</label>
+            <input type="search" id="search" name="search" placeholder="Enter search criteria" required>
+
+            <button type="submit">Search</button>
+        </form>
+    </section>
+
+    <!-- List of Patients (Result of Search) -->
+    <section>
+        <h3>Search Results</h3>
+        <?php
+        // Replace this with your actual search and display code
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $searchTerm = $_POST["search"];
+
+            // Modify your SQL query to include the search term
+            $sql = "SELECT patientID, name, bloodGroup, disease, donationID, otherInfo FROM patients WHERE
+                    patientID LIKE '%$searchTerm%' OR
+                    name LIKE '%$searchTerm%' OR
+                    bloodGroup LIKE '%$searchTerm%' OR
+                    disease LIKE '%$searchTerm%' OR
+                    donationID LIKE '%$searchTerm%'";
+
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                echo "<ul>";
+                while ($row = $result->fetch_assoc()) {
+                    echo "<li>Patient " . $row["patientID"] . " - Name: " . $row["name"] . ", Blood Group: " . $row["bloodGroup"] . ", Disease: " . $row["disease"] . ", Donation ID: " . $row["donationID"] . ", Other Information: " . $row["otherInfo"] . "</li>";
+                }
+                echo "</ul>";
+            } else {
+                echo "<p>No matching patients found.</p>";
+            }
+        }
+        ?>
+    </section>
+
+<!-- Update Patient Information -->
+<section>
+    <h3>Update Patient Information</h3>
+    <form method="post" action="updatePatient.php">
+        <label for="updatePatientID">Enter Patient ID to Update:</label>
+        <input type="text" id="updatePatientID" name="updatePatientID" required placeholder="Patient ID">
+
+        <!-- Add input fields for the information you want to update -->
+        <!-- Example: <label for="newName">New Name:</label>
+                   <input type="text" id="newName" name="newName" placeholder="New Name"> -->
+
+        <button type="submit">Update</button>
+    </form>
+</section>
+
+<!-- Delete Patient -->
+<section>
+    <h3>Delete Patient</h3>
+    <form method="post" action="deletePatient.php">
+        <label for="deletePatientID">Enter Patient ID to Delete:</label>
+        <input type="text" id="deletePatientID" name="deletePatientID" required placeholder="Patient ID">
+
+        <button type="submit">Delete</button>
+    </form>
+</section>
+
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Blood Donations</title>
+    <link rel="stylesheet" type="text/css" href="bloodDonation.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('donation.jpg') center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: #0b0b0b;
+        }
+
+        h2, h3 {
+            text-align: center;
+        }
+
+        h2{
+            font-size:36px;
+            color:#770f03
+        }
+
+        section {
+            margin: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.184);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Blood Donation Management</h2>
+
+    <!-- Registration Form -->
+    <section>
+        <h3>Add a New Blood Donation</h3>
+        <form method="post" action="submitBloodDonationData.php"> <!-- Assuming PHP is used -->
+            <label for="donationID">Donation ID:</label>
+            <input type="text" id="donationID" name="donationID" required>
+
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date" required>
+
+            <label for="bloodGroup">Blood Group:</label>
+            <input type="text" id="bloodGroup" name="bloodGroup" required>
+
+            <label for="donorID">Donor ID:</label>
+            <input type="text" id="donorID" name="donorID" required>
+
+            <label for="bloodBankID">Blood Bank ID:</label>
+            <input type="text" id="bloodBankID" name="bloodBankID" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <!-- Search Bar -->
+    <section>
+        <h3>Search Blood Donations</h3>
+        <form method="post" action="searchBloodDonations.php"> <!-- Assuming PHP is used for search -->
+            <label for="search">Search by ID, Date, Blood Group, Donor ID, or Blood Bank ID:</label>
+            <input type="search" id="search" name="search" placeholder="Enter search criteria" required>
+
+            <button type="submit">Search</button>
+        </form>
+    </section>
+
+    <!-- List of Blood Donations (Result of Search) -->
+    <section>
+        <h3>Search Results</h3>
+        <?php
+        // Replace this with your actual search and display code
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $searchTerm = $_POST["search"];
+
+            // Modify your SQL query to include the search term
+            $sql = "SELECT donationID, date, bloodGroup, donorID, bloodBankID FROM blood_donations WHERE
+                    donationID LIKE '%$searchTerm%' OR
+                    date LIKE '%$searchTerm%' OR
+                    bloodGroup LIKE '%$searchTerm%' OR
+                    donorID LIKE '%$searchTerm%' OR
+                    bloodBankID LIKE '%$searchTerm%'";
+
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                echo "<ul>";
+                while ($row = $result->fetch_assoc()) {
+                    echo "<li>Donation " . $row["donationID"] . " - Date: " . $row["date"] . ", Blood Group: " . $row["bloodGroup"] . ", Donor ID: " . $row["donorID"] . ", Blood Bank ID: " . $row["bloodBankID"] . "</li>";
+                }
+                echo "</ul>";
+            } else {
+                echo "<p>No matching blood donations found.</p>";
+            }
+        }
+        ?>
+    </section>
+<!-- Update Blood Donation Information -->
+<section>
+    <h3>Update Blood Donation Information</h3>
+    <form method="post" action="updateBloodDonation.php">
+        <label for="updateDonationID">Enter Donation ID to Update:</label>
+        <input type="text" id="updateDonationID" name="updateDonationID" required placeholder="Donation ID">
+
+        <!-- Add input fields for the information you want to update -->
+        <!-- Example: <label for="newDate">New Date:</label>
+                   <input type="text" id="newDate" name="newDate" placeholder="New Date"> -->
+
+        <button type="submit">Update</button>
+    </form>
+</section>
+
+
+<!-- Delete Blood Donation -->
+<section>
+    <h3>Delete Blood Donation</h3>
+    <form method="post" action="deleteBloodDonation.php">
+        <label for="deleteDonationID">Enter Donation ID to Delete:</label>
+        <input type="text" id="deleteDonationID" name="deleteDonationID" required placeholder="Donation ID">
+
+        <button type="submit">Delete</button>
+    </form>
+</section>
+
+</body>
+
+</html>
