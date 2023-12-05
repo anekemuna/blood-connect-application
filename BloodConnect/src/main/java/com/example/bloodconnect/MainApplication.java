@@ -17,7 +17,7 @@ public class MainApplication extends Application {
         DashboardController dashboardController = loader.getController();
         dashboardController.initialize(); // Initialize data on the dashboard
 
-        Scene scene = new Scene(root, 900, 600);
+        Scene scene = new Scene(root, 600, 400);
         stage.setTitle("Blood Connect - Dashboard");
         stage.setScene(scene);
         stage.show();

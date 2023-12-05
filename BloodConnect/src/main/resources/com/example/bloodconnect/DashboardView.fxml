@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F9F6ED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bloodconnect.DashboardController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/blood_connect_logo.png" />
+         </image></ImageView>
+      <Label layoutX="232.0" layoutY="131.0" text="Total Patients:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="159.0" layoutY="180.0" text="Total Unassigned Patients:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="patientTotalLabel" layoutX="354.0" layoutY="131.0" prefHeight="20.0" prefWidth="26.0" text="00">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="patientUnassignedLabel" layoutX="353.0" layoutY="180.0" prefHeight="20.0" prefWidth="32.0" text="00">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="patientButton" layoutX="50.0" layoutY="310.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="104.0" text="Patients" />
+      <Button fx:id="donorButton" layoutX="182.0" layoutY="310.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="104.0" text="Donor" />
+      <Button fx:id="donationButton" layoutX="314.0" layoutY="310.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="104.0" text="Donations" />
+      <Button fx:id="bloodBankButton" layoutX="446.0" layoutY="310.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="104.0" text="Blood Banks" />
    </children>
 </AnchorPane>
