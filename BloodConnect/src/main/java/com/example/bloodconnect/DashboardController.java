@@ -37,10 +37,11 @@ public class DashboardController {
     private Stage stage;
     private Scene scene;
 
-    private final PatientDAO patientDAO = new PatientDAO();
+    private final PatientDAO patientDAO = new PatientDAO(DatabaseConnector.getConnection());
 
     public DashboardController() throws SQLException {
     }
+
 
     // Initialize data on the dashboard
     public void initialize() {
@@ -79,7 +80,7 @@ public class DashboardController {
             stage.setTitle("Blood Connect - Patient DB");
 
             PatientPageController patientPageController = loader.getController();
-            patientPageController.setPatientDAO(new PatientDAO());
+            patientPageController.setPatientDAO(new PatientDAO(DatabaseConnector.getConnection()));
 
             stage.setScene(scene);
             stage.show();

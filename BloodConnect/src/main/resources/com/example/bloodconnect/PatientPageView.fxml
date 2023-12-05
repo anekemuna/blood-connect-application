@@ -9,7 +9,7 @@
     <children>
         <TableView fx:id="patientTable" layoutX="14.0" layoutY="63.0" prefHeight="323.0" prefWidth="577.0">
             <columns>
-                <TableColumn fx:id="donorIdColumn" prefWidth="54.333343505859375" text="ID" />
+                <TableColumn fx:id="patientIdColumn" prefWidth="54.333343505859375" text="ID" />
                 <TableColumn fx:id="nameColumn" prefWidth="166.66665649414062" text="Name" />
                 <TableColumn fx:id="bloodGroupColumn" prefWidth="96.0" text="Blood Group" />
                 <TableColumn fx:id="diseaseColumn" prefWidth="172.0" text="Disease" />

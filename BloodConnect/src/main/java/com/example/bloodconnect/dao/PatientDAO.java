@@ -13,6 +13,9 @@ import java.util.List;
 public class PatientDAO {
     private Connection connection;
 
+    public PatientDAO(Connection connection) throws SQLException {
+        this.connection = connection;
+    }
 
     public List<Patient> getALlPatients()
     {
@@ -27,7 +30,7 @@ public class PatientDAO {
                 String name = resultSet.getString("p_name");
                 String bloodGroup = resultSet.getString("p_blood_group");
                 String disease = resultSet.getString("disease");
-                Integer donationId = resultSet.getInt("donationId");
+                Integer donationId = resultSet.getInt("donation_id");
 
                 Patient patient = new Patient(patientId, name, bloodGroup, disease, donationId);
                 patients.add(patient);
@@ -38,10 +41,6 @@ public class PatientDAO {
         }
 
         return patients;
-    }
-
-    public PatientDAO() throws SQLException {
-        this.connection = DatabaseConnector.getConnection();
     }
 
     /**
