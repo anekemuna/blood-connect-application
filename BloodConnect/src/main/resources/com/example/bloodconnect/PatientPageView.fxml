@@ -5,15 +5,15 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: F9F6ED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bloodconnect.DonorPageController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: F9F6ED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bloodconnect.PatientPageController">
     <children>
-        <TableView fx:id="donorTable" layoutX="14.0" layoutY="63.0" prefHeight="323.0" prefWidth="577.0">
+        <TableView fx:id="patientTable" layoutX="14.0" layoutY="63.0" prefHeight="323.0" prefWidth="577.0">
             <columns>
                 <TableColumn fx:id="donorIdColumn" prefWidth="54.333343505859375" text="ID" />
-                <TableColumn fx:id="nameColumn" prefWidth="144.33334350585938" text="Name" />
-                <TableColumn fx:id="bloodGroupColumn" prefWidth="86.66668701171875" text="Blood Group" />
-                <TableColumn fx:id="addressColumn" prefWidth="157.0" text="Address" />
-                <TableColumn fx:id="contactNoColumn" prefWidth="132.66668701171875" text="Contact No" />
+                <TableColumn fx:id="nameColumn" prefWidth="166.66665649414062" text="Name" />
+                <TableColumn fx:id="bloodGroupColumn" prefWidth="96.0" text="Blood Group" />
+                <TableColumn fx:id="diseaseColumn" prefWidth="172.0" text="Disease" />
+                <TableColumn fx:id="donationIdColumn" prefWidth="87.3333740234375" text="Donation ID" />
             </columns>
         </TableView>
         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToDashboard" text="Back" />

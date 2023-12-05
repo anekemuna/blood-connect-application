@@ -33,9 +33,9 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="patientButton" layoutX="50.0" layoutY="310.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="104.0" text="Patients" />
+      <Button fx:id="patientButton" layoutX="50.0" layoutY="310.0" mnemonicParsing="false" onAction="#openPatientPage" prefHeight="38.0" prefWidth="104.0" text="Patients" />
       <Button fx:id="donorButton" layoutX="182.0" layoutY="310.0" mnemonicParsing="false" onAction="#openDonorPage" prefHeight="38.0" prefWidth="104.0" text="Donor" />
-      <Button fx:id="donationButton" layoutX="314.0" layoutY="310.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="104.0" text="Donations" />
-      <Button fx:id="bloodBankButton" layoutX="446.0" layoutY="310.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="104.0" text="Blood Banks" />
+      <Button fx:id="donationButton" layoutX="314.0" layoutY="310.0" mnemonicParsing="false" onAction="#openDonationPage" prefHeight="38.0" prefWidth="104.0" text="Donations" />
+      <Button fx:id="bloodBankButton" layoutX="446.0" layoutY="310.0" mnemonicParsing="false" onAction="#openBankPage" prefHeight="38.0" prefWidth="104.0" text="Blood Banks" />
    </children>
 </AnchorPane>
