@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 public class PatientDAO {
 
+
     /**
      *
      * @return the number of total patients in the database
