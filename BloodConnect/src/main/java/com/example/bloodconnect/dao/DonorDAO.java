@@ -21,11 +21,10 @@ public class DonorDAO {
         this.connection = connection;
     }
 
-    // Method to retrieve all donor records from the database
 
     /**
      *
-     * @return List of donors
+     * @return Return a list of all the donors
      */
     public List<Donor> getAllDonors() {
         List<Donor> donors = new ArrayList<>();
@@ -46,7 +45,7 @@ public class DonorDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            e.printStackTrace(); // Handle the exception
         }
 
         return donors;
