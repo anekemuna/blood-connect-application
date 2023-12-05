@@ -22,13 +22,9 @@ public class DashboardController {
     @FXML
     private Button bloodBankButton;
 
-    // You can add more UI elements and methods as needed
-
-    // Example method to initialize data on the dashboard
-
     private final PatientDAO patientDAO = new PatientDAO();
 
-    // Example method to initialize data on the dashboard
+    // Initialize data on the dashboard
     public void initialize() {
         int totalPatients = patientDAO.getTotalPatients();
         int patientsWithNullDonationId = patientDAO.getPatientsWithNullDonationIdCount();
