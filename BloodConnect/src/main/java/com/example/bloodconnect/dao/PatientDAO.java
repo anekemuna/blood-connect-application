@@ -1,6 +1,5 @@
 package com.example.bloodconnect.dao;
 
-import com.example.bloodconnect.DatabaseConnector;
 import com.example.bloodconnect.model.Patient;
 
 import java.sql.Connection;
@@ -11,14 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientDAO {
-    private Connection connection;
+    private final Connection connection;
 
     public PatientDAO(Connection connection) throws SQLException {
         this.connection = connection;
     }
 
-    public List<Patient> getALlPatients()
-    {
+    public List<Patient> getALlPatients() {
         List<Patient> patients = new ArrayList<>();
         String query = "SELECT * FROM patient";
 
@@ -44,7 +42,6 @@ public class PatientDAO {
     }
 
     /**
-     *
      * @return the number of total patients in the database
      */
     public int getTotalPatients() {
@@ -65,7 +62,6 @@ public class PatientDAO {
     }
 
     /**
-     *
      * @return the number of patients with no donation attached to them
      */
     public int getPatientsWithNullDonationIdCount() {
@@ -83,5 +79,16 @@ public class PatientDAO {
         }
 
         return patientsWithNullDonationId;
+    }
+
+    public void deletePatient(Patient patient) {
+        String query = "DELETE FROM patient WHERE patient_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, patient.getPatientId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
     }
 }

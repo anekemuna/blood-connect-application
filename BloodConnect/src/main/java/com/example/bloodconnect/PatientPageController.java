@@ -8,8 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,6 +26,9 @@ public class PatientPageController {
     TableColumn<Patient, String> diseaseColumn;
     @FXML
     TableColumn<Patient, String> donationIdColumn;
+
+    @FXML
+    TableColumn<Patient, Void> deleteColumn;
     @FXML
     private TableView<Patient> patientTable;
 
@@ -42,6 +44,47 @@ public class PatientPageController {
         bloodGroupColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBloodGroup()));
         diseaseColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDisease()));
         donationIdColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDonationId())));
+
+        deleteColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button deleteButton = new Button("Delete");
+
+            {
+                deleteButton.setOnAction(event -> {
+                    Patient patient = getTableView().getItems().get(getIndex());
+                    confirmAndDelete(patient);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
+                }
+            }
+        });
+    }
+
+    private void confirmAndDelete(Patient patient) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Deletion");
+        alert.setHeaderText("Delete Patient Record");
+        alert.setContentText("Are you sure you want to delete this patient record?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                deletePatient(patient);
+            }
+        });
+    }
+
+    private void deletePatient(Patient patient) {
+        if (patientDAO != null) {
+            patientDAO.deletePatient(patient);
+            viewPatients(); // Refresh the table after deletion
+        }
     }
 
     public void setPatientDAO(PatientDAO patientDAO) {
