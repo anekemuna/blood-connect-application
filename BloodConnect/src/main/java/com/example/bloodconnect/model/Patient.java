@@ -39,8 +39,24 @@ public class Patient {
         return disease;
     }
 
-    public int getDonationId() {
+    public Integer getDonationId() {
         return donationId;
+    }
+
+    public void setName(String pName) {
+        this.pName = pName;
+    }
+
+    public void setBloodGroup(String pBloodGroup) {
+        this.pBloodGroup = pBloodGroup;
+    }
+
+    public void setDisease(String disease) {
+        this.disease = disease;
+    }
+
+    public void setDonationId(Integer donationId) {
+        this.donationId = donationId;
     }
 }
 

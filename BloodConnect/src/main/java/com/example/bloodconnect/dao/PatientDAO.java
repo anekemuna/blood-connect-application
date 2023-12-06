@@ -139,4 +139,24 @@ public class PatientDAO {
 
         return false;
     }
+
+    /**
+     * update a patient info
+     * @param patient
+     */
+    public void updatePatient(Patient patient) {
+        String query = "UPDATE patient SET p_name=?, p_blood_group=?, disease=?, donation_id=? WHERE patient_id=?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, patient.getName());
+            statement.setString(2, patient.getBloodGroup());
+            statement.setString(3, patient.getDisease());
+            statement.setInt(4, patient.getDonationId());
+            statement.setInt(5, patient.getPatientId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.bloodconnect;
 
+import com.example.bloodconnect.dao.BloodDonationDAO;
 import com.example.bloodconnect.dao.PatientDAO;
 import com.example.bloodconnect.model.Patient;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class PatientPageController {
@@ -34,11 +36,15 @@ public class PatientPageController {
     private TableView<Patient> patientTable;
 
     private PatientDAO patientDAO;
+    private BloodDonationDAO bloodDonationDAO;
     private Stage stage;
     private Scene scene;
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException {
+
+        bloodDonationDAO = new BloodDonationDAO(DatabaseConnector.getConnection());
+
         // Initialize the table columns
         patientIdColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getPatientId())));
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
@@ -147,6 +153,62 @@ public class PatientPageController {
         } catch (IOException e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
+    }
+
+    @FXML
+    private void handleUpdatePatient() {
+        // Check if a patient is selected in the table
+        Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
+        if (selectedPatient == null) {
+            showAlert("Error", "Please select a patient to update.");
+            return;
+        }
+
+        // Create a new Stage for the pop-up form
+        Stage updatePatientStage = new Stage();
+        updatePatientStage.setTitle("Update Patient");
+
+        try {
+            // Load the FXML file for the pop-up form
+            FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("UpdatePatientFormView.fxml"));
+            Scene scene = new Scene(loader.load(), 400, 300);
+
+            // Set the scene
+            updatePatientStage.setScene(scene);
+
+            // Set the PatientDAO in the UpdatePatientFormController
+            UpdatePatientFormController updatePatientFormController = loader.getController();
+            updatePatientFormController.setPatientDAO(patientDAO);
+            updatePatientFormController.setBloodDonationDAO(bloodDonationDAO);
+            updatePatientFormController.setSelectedPatient(selectedPatient);
+
+            // Set the stage as a modal window
+            updatePatientStage.initModality(Modality.APPLICATION_MODAL);
+
+            // Set the stage as the owner of the pop-up form
+            updatePatientStage.initOwner(patientTable.getScene().getWindow());
+            updatePatientFormController.setStage(updatePatientStage);
+            // Show the pop-up form
+            updatePatientStage.showAndWait();
+
+            // After the form is closed, refresh the patient table
+            viewPatients();
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+    }
+
+    /**
+     * Pop Dialog Box with content message
+     * @param title
+     * @param content
+     */
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     @FXML

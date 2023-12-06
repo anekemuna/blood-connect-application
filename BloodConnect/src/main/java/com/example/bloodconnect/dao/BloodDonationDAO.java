@@ -47,4 +47,23 @@ public class BloodDonationDAO {
 
         return donations;
     }
+
+    public boolean donationExists(int donationId) {
+        String query = "SELECT COUNT(*) FROM blood_donation WHERE donation_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, donationId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+
+        return false;
+    }
 }
