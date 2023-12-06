@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: F9F6ED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bloodconnect.BankPageController">
+    <children>
+        <TableView fx:id="bankTable" layoutX="14.0" layoutY="63.0" prefHeight="323.0" prefWidth="577.0">
+            <columns>
+                <TableColumn fx:id="bankIdColumn" prefWidth="69.66665649414062" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="161.99996948242188" text="Name" />
+                <TableColumn fx:id="addressColumn" prefWidth="205.66668701171875" text="Address" />
+                <TableColumn fx:id="contactNoColumn" prefWidth="138.6666259765625" text="Contact No" />
+            </columns>
+        </TableView>
+        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToDashboard" text="Back" />
+    </children>
+</AnchorPane>
