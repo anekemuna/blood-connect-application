@@ -81,6 +81,10 @@ public class PatientDAO {
         return patientsWithNullDonationId;
     }
 
+    /**
+     * delete an existing patient
+     * @param patient
+     */
     public void deletePatient(Patient patient) {
         String query = "DELETE FROM patient WHERE patient_id = ?";
 
@@ -90,5 +94,49 @@ public class PatientDAO {
         } catch (SQLException e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
+    }
+
+    /**
+     * adds a new patient
+     * @param patient
+     */
+    public void addPatient(Patient patient) {
+        String query = "INSERT INTO patient (patient_id, p_name, p_blood_group, disease) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, patient.getPatientId());
+            statement.setString(2, patient.getName());
+            statement.setString(3, patient.getBloodGroup());
+            statement.setString(4, patient.getDisease());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+    }
+
+    /**
+     *
+     * @param patientId
+     * @return True if the patientID is in the database
+     */
+
+    public boolean patientExists(int patientId) {
+        String query = "SELECT COUNT(*) FROM patient WHERE patient_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, patientId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+
+        return false;
     }
 }

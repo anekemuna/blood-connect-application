@@ -67,6 +67,10 @@ public class PatientPageController {
         });
     }
 
+    /**
+     * Confirm and delete patient from table (dialog box)
+     * @param patient
+     */
     private void confirmAndDelete(Patient patient) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Deletion");
@@ -80,6 +84,10 @@ public class PatientPageController {
         });
     }
 
+    /**
+     * Delete and Update the table
+     * @param patient
+     */
     private void deletePatient(Patient patient) {
         if (patientDAO != null) {
             patientDAO.deletePatient(patient);
@@ -92,10 +100,85 @@ public class PatientPageController {
         viewPatients();
     }
 
+    /**
+     * Sets the tables
+     */
     private void viewPatients() {
         if (patientDAO != null) {
             patientTable.getItems().setAll(patientDAO.getALlPatients());
         }
+    }
+
+    /**
+     * add patient
+     */
+
+    /*
+    @FXML
+    private void handleAddPatient() {
+        String patientIdText = patientIdField.getText();
+        String name = nameField.getText();
+
+        // Validate input
+        if (patientIdText.isBlank() || name.isBlank()) {
+            showAlert("Error", "Patient ID and Name cannot be blank.");
+            return;
+        }
+
+        // Convert patient ID to an integer
+        int patientId = Integer.parseInt(patientIdText);
+
+        // Check if a patient with the same ID already exists
+        if (patientExists(patientId)) {
+            showAlert("Error", "A patient with the same ID already exists.");
+            return;
+        }
+
+        // Create a new Patient object
+        Patient newPatient = new Patient(patientId, name, bloodGroupField.getText(), diseaseField.getText(), null);
+
+        // Show confirmation dialog
+        boolean confirmed = showAddConfirmation(newPatient);
+
+        // If the user confirms, add the patient to the database
+        if (confirmed) {
+            patientDAO.addPatient(newPatient);
+
+            // Refresh the table
+            viewPatients();
+        }
+    }
+
+    private boolean showAddConfirmation(Patient newPatient) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setHeaderText("Confirm Addition");
+        confirmationAlert.setContentText("Do you want to add the following patient?\n\n" +
+                "Patient ID: " + newPatient.getPatientId() + "\n" +
+                "Name: " + newPatient.getName() + "\n" +
+                "Blood Group: " + newPatient.getBloodGroup() + "\n" +
+                "Disease: " + newPatient.getDisease());
+
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
+*/
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    /**
+     * Returns true if patient exists
+     * @param patientId
+     * @return
+     */
+    private boolean patientExists(int patientId) {
+        // PatientDAO has a method to check if a patient exists
+        return patientDAO != null && patientDAO.patientExists(patientId);
     }
 
     @FXML

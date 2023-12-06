@@ -9,8 +9,8 @@
     <children>
         <TableView fx:id="patientTable" layoutX="14.0" layoutY="63.0" prefHeight="323.0" prefWidth="577.0">
             <columns>
-            <TableColumn fx:id="deleteColumn" prefWidth="78.66665363311768" />
-                <TableColumn fx:id="patientIdColumn" prefWidth="30.666656494140625" text="ID" />
+            <TableColumn fx:id="deleteColumn" prefWidth="71.3333101272583" />
+                <TableColumn fx:id="patientIdColumn" prefWidth="38.0" text="ID" />
                 <TableColumn fx:id="nameColumn" prefWidth="118.66666412353516" text="Name" />
                 <TableColumn fx:id="bloodGroupColumn" prefWidth="77.99998474121094" text="Blood Group" />
                 <TableColumn fx:id="diseaseColumn" prefWidth="194.33340454101562" text="Disease" />
