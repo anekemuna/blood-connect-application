@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -69,6 +70,7 @@ public class PatientPageController {
 
     /**
      * Confirm and delete patient from table (dialog box)
+     *
      * @param patient
      */
     private void confirmAndDelete(Patient patient) {
@@ -86,6 +88,7 @@ public class PatientPageController {
 
     /**
      * Delete and Update the table
+     *
      * @param patient
      */
     private void deletePatient(Patient patient) {
@@ -113,72 +116,37 @@ public class PatientPageController {
      * add patient
      */
 
-    /*
     @FXML
     private void handleAddPatient() {
-        String patientIdText = patientIdField.getText();
-        String name = nameField.getText();
+        Stage addPatientStage = new Stage();
+        addPatientStage.setTitle("Add New Patient");
 
-        // Validate input
-        if (patientIdText.isBlank() || name.isBlank()) {
-            showAlert("Error", "Patient ID and Name cannot be blank.");
-            return;
-        }
+        try {
+            // Load the FXML file for the pop-up form
+            FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("AddPatientFormView.fxml"));
+            Scene scene = new Scene(loader.load(), 400, 300);
 
-        // Convert patient ID to an integer
-        int patientId = Integer.parseInt(patientIdText);
+            // Set the scene
+            addPatientStage.setScene(scene);
 
-        // Check if a patient with the same ID already exists
-        if (patientExists(patientId)) {
-            showAlert("Error", "A patient with the same ID already exists.");
-            return;
-        }
+            // Set the PatientDAO in the AddPatientFormController
+            AddPatientFormController addPatientFormController = loader.getController();
+            addPatientFormController.setPatientDAO(patientDAO);
 
-        // Create a new Patient object
-        Patient newPatient = new Patient(patientId, name, bloodGroupField.getText(), diseaseField.getText(), null);
+            // Set the stage as a modal window
+            addPatientStage.initModality(Modality.APPLICATION_MODAL);
 
-        // Show confirmation dialog
-        boolean confirmed = showAddConfirmation(newPatient);
+            // Set the stage as the owner of the pop-up form
+            addPatientStage.initOwner(patientTable.getScene().getWindow());
 
-        // If the user confirms, add the patient to the database
-        if (confirmed) {
-            patientDAO.addPatient(newPatient);
+            // Show the pop-up form
+            addPatientStage.showAndWait();
 
-            // Refresh the table
+            // After the form is closed, refresh the patient table
             viewPatients();
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception appropriately
         }
-    }
-
-    private boolean showAddConfirmation(Patient newPatient) {
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setHeaderText("Confirm Addition");
-        confirmationAlert.setContentText("Do you want to add the following patient?\n\n" +
-                "Patient ID: " + newPatient.getPatientId() + "\n" +
-                "Name: " + newPatient.getName() + "\n" +
-                "Blood Group: " + newPatient.getBloodGroup() + "\n" +
-                "Disease: " + newPatient.getDisease());
-
-        Optional<ButtonType> result = confirmationAlert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
-    }
-*/
-    private void showAlert(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-
-    /**
-     * Returns true if patient exists
-     * @param patientId
-     * @return
-     */
-    private boolean patientExists(int patientId) {
-        // PatientDAO has a method to check if a patient exists
-        return patientDAO != null && patientDAO.patientExists(patientId);
     }
 
     @FXML
