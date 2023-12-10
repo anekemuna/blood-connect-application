@@ -4,6 +4,8 @@ import com.example.bloodconnect.dao.BloodDonationDAO;
 import com.example.bloodconnect.dao.PatientDAO;
 import com.example.bloodconnect.model.Patient;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,7 +36,8 @@ public class PatientPageController {
     TableColumn<Patient, Void> deleteColumn;
     @FXML
     private TableView<Patient> patientTable;
-
+    @FXML
+    private TextField searchField;
     private PatientDAO patientDAO;
     private BloodDonationDAO bloodDonationDAO;
     private Stage stage;
@@ -221,5 +224,13 @@ public class PatientPageController {
         stage.setScene(scene);
         stage.show();
     }
-
+    // Method to handle search action
+    @FXML
+    private void onSearchClicked(ActionEvent event) {
+        String patientId = searchField.getText().trim();
+        if (!patientId.isEmpty()) {
+            ObservableList<Patient> patients = FXCollections.observableArrayList(patientDAO.searchPatientsById(patientId));
+            patientTable.setItems(patients);
+        }
+    }
 }
