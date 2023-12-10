@@ -159,4 +159,30 @@ public class PatientDAO {
             e.printStackTrace(); // Handle the exception appropriately
         }
     }
+    // Method to search patients by ID
+    public List<Patient> searchPatientsById(String patientIdQuery) {
+        List<Patient> patients = new ArrayList<>();
+        String query = "SELECT * FROM patient WHERE patient_id = ?"; // Using exact match instead of LIKE for ID
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, Integer.parseInt(patientIdQuery)); // Assuming patient_id is an integer
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int patientId = resultSet.getInt("patient_id");
+                    String name = resultSet.getString("p_name");
+                    String bloodGroup = resultSet.getString("p_blood_group");
+                    String disease = resultSet.getString("disease");
+                    int donationId = resultSet.getInt("donation_id");
+
+                    patients.add(new Patient(patientId, name, bloodGroup, disease, donationId));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Handle exceptions
+        }
+        return patients;
+    }
+
+
 }
